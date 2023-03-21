@@ -6,10 +6,12 @@ class router_scoreboard extends uvm_scoreboard;
 	uvm_tlm_analysis_fifo #(trxn) fifo_wrh;
 	`uvm_component_utils(router_scoreboard)
 	
+	trxn src;
+	dst_trxn dst;
 	
 	
 	extern function new(string name,uvm_component parent);
-	extern function void build_phase(uvm_phase phase);
+	
 	extern task run_phase(uvm_phase);
 	extern task check (dst_trxn);
 
@@ -25,12 +27,36 @@ function router_scoreboard::new(string name,uvm_component parent);
 	
 endfunction
 
-task router_scoreboard::check (dst_trxn dst);
-
-	if(rd.header==trxn.header)
+task router_scoreboard::run_phase(phase);
+	fork
 		begin
-		foreach(rd.payload[i])
-			if(rd.payload[i]!=trxn.payload[i])
+			fifo_wrh.get(src);
+		end
+		
+		begin
+		fork
+			fifo_rdh1.get(dst);
+			fifo_rdh2.get(dst);
+			fifo_rdh3.get(dst);
+		join_any
+		
+		diable fork;
+		
+		end
+		
+		join
+		
+			`uvm_info("UVM_SCOREBOARD",$sformatf("The src data is \n %s",src.sprint()),UVM_LOW);
+			`uvm_info("UVM_SCOREBOARD",$sformatf("The dst data is \n %s",dst.sprint()),UVM_LOW);
+			check(src,dst);
+endtask
+
+task router_scoreboard::check (trxn src, dst_trxn dst);
+
+	if(dst.header==src.header)
+		begin
+		foreach(dst.payload[i])
+			if(dst.payload[i]!=src.payload[i])
 				begin
 				$display("-------------------------------WRONG DATA------------------------------");
 				return;
@@ -42,7 +68,7 @@ task router_scoreboard::check (dst_trxn dst);
 	return;
 	end
 	
-	if(rd.parity==trxn.parity)
+	if(dst.parity==dst.parity)
 	$display("-------------------------------------GOOD PACKET-----------------------------------");
 	
 	else
