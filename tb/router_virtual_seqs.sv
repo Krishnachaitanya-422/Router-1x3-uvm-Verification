@@ -11,4 +11,7 @@ class router_virtual_sequence extends uvm_sequence #(uvm_sequence_item) ;
     // Declare handle for ram_env_config 
    	 router_env_config m_cfg;
 	 
+	 
+	// src and dst seq handles
+	// 
 endclass
