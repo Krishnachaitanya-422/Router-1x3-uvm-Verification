@@ -48,7 +48,7 @@ function void router_src_agent::build_phase(uvm_phase phase);
 	if(m_cfg.is_active==UVM_ACTIVE)
 		begin
 			drvh=router_src_driver::type_id::create("drvh",this);
-			seqrh=router_src_sequencer#(trxn)::type_id::create("seqrh",this);
+			seqrh=router_src_sequencer::type_id::create("seqrh",this);
 		end
 		
 endfunction

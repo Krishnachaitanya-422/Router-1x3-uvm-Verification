@@ -8,7 +8,7 @@ class router_dst_monitor extends uvm_monitor;
 
 	// Declare virtual interface handle with DST_MON_MP as modport
    	virtual router_dst_if.DST_MON_MP vif;
-
+	dst_trxn xtn;
 	// Declare the router_dst_agt_config handle as "m_cfg"
     router_dst_agt_config m_cfg;
 
@@ -71,7 +71,7 @@ endtask
 
 //Collect Reference Data from DUV IF 
 task router_dst_monitor::collect_data();
-	xtn=dst_trxn::type_id::create("XTN");
+	xtn=dst_trxn::type_id::create("xtn");
 	
 	wait(vif.dst_mon_cb.rd_en)
 	@(vif.dst_mon_cb);
@@ -87,8 +87,8 @@ task router_dst_monitor::collect_data();
     
 	@(vif.dst_mon_cb);
 	xtn.parity=vif.dst_mon_cb.dout;
-	xtn.print;
-	
+	//xtn.print;
+	`uvm_info("ROUTER_DST_MONITOR",$sformatf("printing from monitor \n %s",xtn.sprint()),UVM_LOW);
 	@(vif.dst_mon_cb);
 	monitor_port.write(xtn);
   

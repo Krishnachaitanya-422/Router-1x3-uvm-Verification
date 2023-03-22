@@ -58,7 +58,7 @@ task router_src_driver::run_phase(uvm_phase phase);
 		begin
 			
 			seq_item_port.get_next_item(req);
-			drive (req);
+			send_to_dut (req);
 			seq_item_port.item_done;
 			
 		end
@@ -70,7 +70,8 @@ endtask
 // Add task send_to_dut(write_xtn handle as an input argument)
 	
 task router_src_driver::send_to_dut(trxn xtn);
-	trxn.print();
+	//trxn.print;
+	`uvm_info("router_src_driver",$sformatf("printing from src driver \n %s",xtn.sprint()),UVM_LOW)
 	wait(~vif.src_dr_cb.busy)
 	@(vif.src_dr_cb);
 	vif.src_dr_cb.pkt_valid<=1;

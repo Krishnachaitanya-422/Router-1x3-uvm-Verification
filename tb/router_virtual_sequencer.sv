@@ -38,6 +38,6 @@ function void router_virtual_sequencer::build_phase(uvm_phase phase);
 	// LAB : Create dynamic array handles wr_seqrh & rd_seqrh equal to
 	// the config parameter no_of_duts
 
-    s_seqrh = new[m_cfg.no_of_duts];
-    d_seqrh = new[m_cfg.no_of_duts];
+    s_seqrh = new[m_cfg.no_of_sources];
+    d_seqrh = new[m_cfg.no_of_clients];
 endfunction

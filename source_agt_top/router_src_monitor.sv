@@ -7,10 +7,10 @@ class router_src_monitor extends uvm_monitor;
 
 	// Declare virtual interface handle with WMON_MP as modport
    	virtual router_src_if.SRC_MON_MP vif;
-
+	
 	// Declare the router_scr_agt_config handle as "m_cfg"
     router_src_agent_config m_cfg;
-	
+	trxn xtn;
 	//Declare Analysis TLM port to connect the monitor to the scoreboard
 	uvm_analysis_port#(trxn)monitor_port;
 	
@@ -47,7 +47,7 @@ endfunction
 // in connect phase assign the configuration object's virtual interface
 // to the monitor's virtual interface instance(handle --> "vif")
 function void router_src_monitor::connect_phase(uvm_phase phase);
-    super.connect_phase(phase)
+    super.connect_phase(phase);
 	vif = m_cfg.vif;
 endfunction
 

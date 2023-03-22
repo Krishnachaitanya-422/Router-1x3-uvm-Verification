@@ -42,7 +42,7 @@ function void router_tb::build_phase(uvm_phase phase);
     if(m_cfg.has_wagent)
 		begin
 			// initialize the dynamic array sagt_top[] to m_cfg.no_of_duts
-			sagt_top = new[m_cfg.no_of_duts];
+			sagt_top = new[m_cfg.no_of_sources];
 			// inside a foreach loop of sagt_top[i]
 			foreach(sagt_top[i])
 				begin
@@ -58,7 +58,7 @@ function void router_tb::build_phase(uvm_phase phase);
     if(m_cfg.has_ragent == 1) 
 		begin
 			// initialize the dynamic array dagt_top[] to m_cfg.no_of_duts
-            dagt_top = new[m_cfg.no_of_duts];
+            dagt_top = new[m_cfg.no_of_clients];
 			// inside a foreach loop of dagt_top[i]
             foreach(dagt_top[i]) 
 				begin

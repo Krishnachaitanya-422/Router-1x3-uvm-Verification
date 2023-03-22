@@ -25,9 +25,8 @@ package router_test_pkg;
 	`include "router_dst_driver.sv"
 	`include "router_dst_agent.sv"
 	`include "router_dst_agt_top.sv"
-
 	`include "router_virtual_sequencer.sv"
-	//`include "router_virtual_seqs.sv"
+	`include "router_virtual_seqs.sv"
 	`include "router_scoreboard.sv"
 
 	`include "router_tb.sv"

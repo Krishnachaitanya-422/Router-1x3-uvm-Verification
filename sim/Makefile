@@ -37,7 +37,7 @@ sv_cmp:
 	vlog -work $(work) $(RTL) $(INC) $(SVTB2) $(SVTB1) 	
 	
 run_test:sv_cmp
-	vsim -cvgperinstance $(VSIMOPT) $(VSIMCOV) $(VSIMBATCH1)  -wlf wave_file1.wlf -l test1.log  -sv_seed random  work.top +UVM_TESTNAME=router_base_test
+	vsim -cvgperinstance $(VSIMOPT) $(VSIMCOV) $(VSIMBATCH1)  -wlf wave_file1.wlf -l test1.log  -sv_seed random  work.top +UVM_TESTNAME=router_test_1
 	vcover report  -cvg  -details -nocompactcrossbins -codeAll -assert -directive -html mem_cov1
 
 	

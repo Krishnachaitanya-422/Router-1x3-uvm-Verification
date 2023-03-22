@@ -21,7 +21,9 @@ class router_env_config extends uvm_object;
 	//dynamic array Configuration handles for the sub_components
 	router_src_agent_config m_wr_agent_cfg[];
 	router_dst_agt_config m_rd_agent_cfg[];
-	int no_of_duts;
+	int no_of_sources=1;
+	int no_of_clients=3;
+	
 
 
 
