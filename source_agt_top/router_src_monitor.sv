@@ -72,6 +72,7 @@ task router_src_monitor::collect_data();
 	xtn.payload=new[xtn.header[7:2]];
 	
 	@(vif.src_mon_cb);
+	@(vif.src_mon_cb);
 	for(int i=0;i<xtn.header[7:2];i++)
 		begin
 		

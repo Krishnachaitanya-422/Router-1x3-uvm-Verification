@@ -1,7 +1,7 @@
 class router_virtual_sequence extends uvm_sequence #(uvm_sequence_item) ;
    
     // Factory Registration
-	`uvm_component_utils(router_virtual_sequence)
+	`uvm_object_utils(router_virtual_sequence)
 	
 	router_virtual_sequencer v_seqrh;
    // Declare dynamic array of handles for router_wr_sequencer and ram_rd_sequencer as wr_seqrh[] & rd_seqrh[]
@@ -10,10 +10,12 @@ class router_virtual_sequence extends uvm_sequence #(uvm_sequence_item) ;
 	router_dst_sequencer d_seqrh[];
 	
 	router_sbase_seq_c1 s_seqh;
-	router_dbase_seq_c1 d_seqh;
+	router_dbase_seq_c1 d_seqh[];
 
     // Declare handle for router_env_config 
    	 router_env_config m_cfg;
+	 
+	 
 	 
 	extern function new(string name="router_virtual_sequence");
 	extern task body;
@@ -27,7 +29,7 @@ endfunction
 
 task router_virtual_sequence::body;
 
-	if(!uvm_config_db#(router_env_config)::get(null,get_full_name(),"env_config",m_cfg))
+	if(!uvm_config_db#(router_env_config)::get(null,get_full_name(),"router_env_config",m_cfg))
 			`uvm_fatal("router_virtual_sequence","cannot get config");
 			
 	$cast(v_seqrh,m_sequencer);
@@ -44,7 +46,7 @@ endtask
 
 class router_virtual_sequence_c1 extends router_virtual_sequence;
 
-	`uvm_component_utils(router_virtual_sequence_c1);
+	`uvm_object_utils(router_virtual_sequence_c1);
 	
 	
 	
@@ -62,9 +64,11 @@ task router_virtual_sequence_c1::body;
 	
 	s_seqh=router_sbase_seq_c1::type_id::create("s_seqh");
 	
-	
-	d_seqh=router_dbase_seq_c1::type_id::create("d_seqh");
+	d_seqh=new[m_cfg.no_of_clients];
+	foreach(d_seqh[i])
 		
+		d_seqh[i]=router_dbase_seq_c1::type_id::create($sformatf("d_seqh[%0d]",i));
+	
 		fork:a
 				begin
 					//foreach(s_seqrh[i])
@@ -72,10 +76,11 @@ task router_virtual_sequence_c1::body;
 				end
 				
 				begin
+
 					fork:b
-						d_seqh.start(d_seqrh[0]);
-						d_seqh.start(d_seqrh[1]);
-						d_seqh.start(d_seqrh[2]);
+						d_seqh[0].start(d_seqrh[0]);
+						d_seqh[1].start(d_seqrh[1]);
+						d_seqh[2].start(d_seqrh[2]);
 					join_any
 					disable b;
 				end

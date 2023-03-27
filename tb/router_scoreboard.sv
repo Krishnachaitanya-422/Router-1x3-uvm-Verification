@@ -27,6 +27,10 @@ function router_scoreboard::new(string name,uvm_component parent);
 	
 endfunction
 
+
+
+
+
 task router_scoreboard::run_phase(uvm_phase phase);
 	fork
 		begin
@@ -34,7 +38,7 @@ task router_scoreboard::run_phase(uvm_phase phase);
 		end
 		
 		begin
-		fork
+		fork 
 			fifo_rdh1.get(dst);
 			fifo_rdh2.get(dst);
 			fifo_rdh3.get(dst);
@@ -44,7 +48,7 @@ task router_scoreboard::run_phase(uvm_phase phase);
 		
 		end
 		
-		join
+	join
 		
 			`uvm_info("UVM_SCOREBOARD",$sformatf("The src data is \n %s",src.sprint()),UVM_LOW);
 			`uvm_info("UVM_SCOREBOARD",$sformatf("The dst data is \n %s",dst.sprint()),UVM_LOW);
@@ -68,7 +72,7 @@ task router_scoreboard::chk (trxn src, dst_trxn dst);
 	return;
 	end
 	
-	if(dst.parity==dst.parity)
+	if(src.parity==dst.parity)
 	$display("-------------------------------------GOOD PACKET-----------------------------------");
 	
 	else

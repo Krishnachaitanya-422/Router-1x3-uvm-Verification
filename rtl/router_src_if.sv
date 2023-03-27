@@ -1,36 +1,29 @@
-interface router_src_if(input bit clk);
-
+interface router_src_if(input bit clock);
 logic [7:0]data_in;
 logic pkt_valid;
 logic resetn;
-logic err,busy;
+logic busy;
+logic err;
 
 
-clocking src_dr_cb@(posedge clk);
-
-default input#1 output #1;
-		input busy;
-		output pkt_valid;
-		output data_in;
-		output resetn;
+clocking src_dr_cb@(posedge clock);
+default input #1 output #1;
+output data_in;
+output pkt_valid;
+output resetn;
+input busy;
 endclocking
 
 
-clocking src_mon_cb@(posedge clk);
-
+clocking src_mon_cb@(posedge clock);
 default input#1 output #1;
-		input pkt_valid;
-		input data_in;
-		input resetn;
-		input busy;
-		
+input data_in;
+input pkt_valid;
+input resetn;
+input busy;
 endclocking
-
-
-// modports
 
 modport SRC_DR_MP(clocking src_dr_cb);
 modport SRC_MON_MP(clocking src_mon_cb);
-
 
 endinterface

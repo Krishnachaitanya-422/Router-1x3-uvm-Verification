@@ -6,7 +6,7 @@ class router_base_test extends uvm_test;
    // Factory Registration
 	`uvm_component_utils(router_base_test)
 
-  
+	
     // Declare the handles for env, env config_object, wr_agent config_object and
     // rd_agent config_object as ram_envh, m_tb_cfg, m_src_cfg[] & m_dst_cfg[]
     // (dynamic array of handles)
@@ -51,7 +51,7 @@ function void router_base_test::config_router();
 					// for all the configuration objects, set the following parameters 
 					// is_active to UVM_ACTIVE
 					// Get the virtual interface from the config database
-					if(!uvm_config_db #(virtual router_src_if)::get(this,"", $sformatf("vif_%0d",i),m_src_cfg[i].vif))
+					if(!uvm_config_db #(virtual router_src_if)::get(this,"","vif",m_src_cfg[i].vif))
 					`uvm_fatal("VIF CONFIG","cannot get()interface vif from uvm_config_db. Have you set() it?") 
 					m_src_cfg[i].is_active = UVM_ACTIVE;
 					// assign the router_src_agent_config handle to the enviornment
@@ -76,7 +76,7 @@ function void router_base_test::config_router();
 					// is_active to UVM_ACTIVE
 					// Get the virtual interface from the config database
 
-					if(!uvm_config_db #(virtual router_dst_if)::get(this,"", $sformatf("vif_%0d",i),m_dst_cfg[i].vif))
+					if(!uvm_config_db #(virtual router_dst_if)::get(this,"", $sformatf("vif[%0d]",i),m_dst_cfg[i].vif))
 					`uvm_fatal("VIF CONFIG","cannot get()interface vif from uvm_config_db. Have you set() it?")
 					m_dst_cfg[i].is_active = UVM_ACTIVE;
 					// assign the ram_rd_agent_config handle to the enviornment
@@ -146,7 +146,7 @@ task router_test_1::run_phase(uvm_phase phase);
 	begin
 		addr= {$random} % 3;
 		uvm_config_db #(bit[1:0])::set(this,"*","bit[1:0]",addr);
-		seq1=router_virtual_sequence_c1::type_id::create("seq1");
+		seq1=router_virtual_sequence_c1::type_id::create("seq1",this);
 		seq1.start(router_envh.v_sequencer);
 	end
 	phase.drop_objection(this);

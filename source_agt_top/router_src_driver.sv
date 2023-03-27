@@ -1,5 +1,5 @@
 //class
-class router_src_driver extends uvm_driver;
+class router_src_driver extends uvm_driver#(trxn);
 
 	`uvm_component_utils(router_src_driver)
 	

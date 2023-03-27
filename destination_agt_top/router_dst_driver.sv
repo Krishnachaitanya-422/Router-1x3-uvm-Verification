@@ -40,7 +40,7 @@ function void router_dst_driver::build_phase(uvm_phase phase);
 	// call super.build_phase(phase);
     super.build_phase(phase);
 	// get the config object using uvm_config_db 
-	if(!uvm_config_db #(router_dst_agt_config)::get(this,"","router_dst_agent_config",m_cfg))
+	if(!uvm_config_db #(router_dst_agt_config)::get(this,"","router_dst_agt_config",m_cfg))
 	`uvm_fatal("CONFIG","cannot get() m_cfg from uvm_config_db. Have you set() it?") 
 endfunction
 
@@ -89,5 +89,5 @@ endtask
 
  // UVM report_phase
  function void router_dst_driver::report_phase(uvm_phase phase);
-    `uvm_info(get_type_name(), $sformatf("Report: Router dst driver sent %0d transactions", m_cfg.drv_data_sent_cnt), UVM_LOW)
+    `uvm_info(get_type_name(), $sformatf("Report: Router dst driver sent %0d transactions", m_cfg.drv_data_sent_cnt), UVM_LOW);
  endfunction 

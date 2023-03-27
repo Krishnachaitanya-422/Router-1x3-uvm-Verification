@@ -1,28 +1,25 @@
-interface router_dst_if(input bit clk);
-//decleration
-bit rd_en;
-logic [7:0]dout;
+interface router_dst_if(input bit clock);
 bit vld_out;
+bit rd_en;
+logic  [7:0] dout;
 
-//cocking blocks
-clocking dst_mon_cb@(posedge clk);
-default input#1 output #1;
-		input dout;
-		input rd_en;
-		
+clocking dst_dr_cb@(posedge clock);
+default input #1 output #1;
+output rd_en;
+input vld_out;
 endclocking
 
-clocking dst_dr_cb@(posedge clk);
 
-default input#1 output #1;
-
-		input vld_out;
-		output rd_en;
+clocking dst_mon_cb@(posedge clock);
+default input #1 output #1;
+input rd_en;
+input dout;
 endclocking
-
-//modport
 
 modport DST_DR_MP(clocking dst_dr_cb);
 modport DST_MON_MP(clocking dst_mon_cb);
 
 endinterface
+
+
+

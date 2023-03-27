@@ -30,8 +30,6 @@ package router_test_pkg;
 	`include "router_scoreboard.sv"
 
 	`include "router_tb.sv"
-
-
 	`include "router_vtest_lib.sv"
 	
 endpackage
